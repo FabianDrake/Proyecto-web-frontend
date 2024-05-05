@@ -10,32 +10,40 @@ function Form() {
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [hasEntered, setHasEntered] = useState(false);
-    const [canEnter, setCanEnter] = useState(null);
+    const [message, setMessage] = useState(''); // Estado para el mensaje
+    const [messageType, setMessageType] = useState(''); // Estado para el tipo de mensaje
 
-    const handleNameChange = (event) => {
+    const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setName(event.target.value);
     };
 
-    const handleEmailChange = (event) => {
+    const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(event.target.value);
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         // Verificar si los campos coinciden con el usuario predeterminado
         if (name === defaultUser.name && email === defaultUser.email) {
-            setHasEntered(true);
-            setCanEnter(true);
+            setMessage('Inicio exitoso');
+            setMessageType('success');
         } else {
-            setHasEntered(false);
-            setCanEnter(false);
+            setMessage('Datos incorrectos');
+            setMessageType('error');
         }
     };
 
     return (
         <div className="form-container">
+            {/* Muestra el mensaje dependiendo del resultado */}
+            {message && (
+                <div className={`message ${messageType}`}>
+                    {message}
+                </div>
+            )}
+
+            {/* El formulario */}
             <form onSubmit={handleSubmit}>
                 <label htmlFor="name">Nombre *</label>
                 <input type="text" name="name" id="name" value={name} onChange={handleNameChange} required />
@@ -49,14 +57,6 @@ function Form() {
 
                 <button type="submit">Ingresar</button>
             </form>
-
-            {/* Mostrar el mensaje dependiendo de canEnter */}
-            {canEnter === true && (
-                <label>¡Has entrado exitosamente!</label>
-            )}
-            {canEnter === false && (
-                <label>No puedes entrar, verifica tus datos.</label>
-            )}
         </div>
     );
 }
