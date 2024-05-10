@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Form.css';
 import { getDatos, postDatos } from '../Generales/Backend';
 function Form() {
@@ -33,12 +33,27 @@ function Form() {
                 if (response.status === 200) {
                     console.log(response);
                     console.log("Bienvenido usuario");
+
+                    setMessage("Bienvenido usuario");
+                    setMessageType("success");
+                    // Guarda el token en localStorage
+                    const token = response.token;
+                    localStorage.setItem('token', token);
                 }
             })
             .catch((error) => {
                 console.error("error al enviar los datos ", error);
             });
     };
+
+    // Verifica si la sesión sigue abierta cuando el componente se monta
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            setMessage("Bienvenido de nuevo usuario");
+            setMessageType("success");
+        }
+    }, []);
 
 return (
     <div className ="form-container">
