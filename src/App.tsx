@@ -4,7 +4,7 @@ import React from 'react'
 import Header from './components/Header/Header'
 import Form from './components/Form/Form'
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom'
-import TablaDatos from './components/Table/Table'
+import Table from './components/Table/Table'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -16,7 +16,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/form" element={<div><Header title='my anime list'/><Form/></div>} />
-          <Route path="/tabla" element={<TablaDatos/>}></Route>
+          <Route path="/tabla" element={<Table/>}></Route>
         </Routes>
         
       </Router>
